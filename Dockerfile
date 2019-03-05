@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:stretch-slim
 
 MAINTAINER Brandon LeBlanc <brandon@leblanc.codes>
 
@@ -21,10 +21,33 @@ RUN apt-get update && \
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
-        libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev \
-        libxml2-dev libxmlsec1-dev libffi-dev \
-        ca-certificates && \
+        dpkg-dev \
+        gcc \
+        libbz2-dev \
+        libc6-dev \
+        libexpat1-dev \
+        libffi-dev \
+        libgdbm-dev \
+        liblzma-dev \
+        libncursesw5-dev \
+        libreadline-dev \
+        libsqlite3-dev \
+        libssl-dev \
+        libxml2-dev \
+        libxmlsec1-dev \
+        libyaml-dev \
+        make \
+        tk-dev \
+        uuid-dev \
+        wget \
+        curl \
+        xz-utils \
+        zlib1g-dev \
+        ca-certificates \
+        netbase \
+# as of Stretch, "gpg" is no longer included by default
+        $(command -v gpg > /dev/null || echo 'gnupg dirmngr') \
+    && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ONBUILD COPY python-versions.txt ./
