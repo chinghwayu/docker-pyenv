@@ -54,7 +54,6 @@ RUN set -eux; \
         zlib1g-dev \
 # as of Stretch, "gpg" is no longer included by default
         $(command -v gpg > /dev/null || echo 'gnupg dirmngr'); \
-    \
     apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
 # configure pyenv
