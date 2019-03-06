@@ -76,5 +76,5 @@ ONBUILD RUN set -eux; \
     mv -v -- /python-versions.txt $PYENV_ROOT/version; \
     pyenv rehash; \
     pyenv versions; \
-    find $PYENV_ROOT/versions -type d '(' -name '__pycache__' -o -name 'test' -o -name 'tests' ')' -print -exec rm -rf '{}' +; \
-    find $PYENV_ROOT/versions -type f '(' -name '*.py[co]' -o -name '*.exe' ')' -print -exec rm -f '{}' +;
+    find $PYENV_ROOT/versions -type d '(' -name '__pycache__' -o -name 'test' -o -name 'tests' ')' -exec rm -rf '{}' +; \
+    find $PYENV_ROOT/versions -type f '(' -name '*.py[co]' -o -name '*.exe' ')' -exec rm -f '{}' +;
