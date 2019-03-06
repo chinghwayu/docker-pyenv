@@ -19,7 +19,6 @@ RUN apt-get update && \
     git clone "https://github.com/pyenv/pyenv.git" "$PYENV_ROOT" && \
     git --git-dir "$PYENV_ROOT/.git" --work-tree "$PYENV_ROOT" checkout -qf "$PYENV_VERSION" && \
     rm -rf "$PYENV_ROOT/.git" && \
-    apt-get purge -y --auto-remove git ca-certificates curl && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN apt-get update && \
