@@ -11,6 +11,7 @@ RUN set -eux; \
     apt-get install --no-install-recommends -y locales; \
     apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; \
     localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8;
+ENV LANG=en_US.UTF-8
 
 # Install gosu to de-elevate permissions
 # https://github.com/tianon/gosu#from-debian
@@ -18,7 +19,6 @@ RUN set -eux; \
     apt-get update; \
     apt-get install --no-install-recommends -y gosu; \
     apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
-ENV LANG=en_US.UTF-8
 
 # install git and curl
 RUN set -eux; \
@@ -60,7 +60,7 @@ RUN set -eux; \
 # configure pyenv
 ENV PYENV_ROOT="/.pyenv" \
     PYENV_GIT_VERSION="7d02b2463b7da53ca62b655c8d5b3a72c7f0cab5" \
-    PATH="$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH"
+    PATH="/.pyenv/bin:/.pyenv/shims:$PATH"
 
 # clone and install pyenv
 RUN set -eux; \
