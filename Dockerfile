@@ -11,12 +11,15 @@ RUN apt-get update && \
 ENV LANG en_US.UTF-8
 
 ENV PYENV_ROOT="/.pyenv" \
+    PYENV_VERSION="7d02b2463b7da53ca62b655c8d5b3a72c7f0cab5" \
     PATH="/.pyenv/bin:/.pyenv/shims:$PATH"
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git ca-certificates curl && \
-    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash && \
-    apt-get purge -y --auto-remove ca-certificates curl && \
+    git clone "https://github.com/pyenv/pyenv.git" "$PYENV_ROOT" && \
+    git --git-dir "$PYENV_ROOT/.git" --work-tree "$PYENV_ROOT" checkout -qf "$PYENV_VERSION" && \
+    rm -rf "$PYENV_ROOT/.git" && \
+    apt-get purge -y --auto-remove git ca-certificates curl && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN apt-get update && \
@@ -51,9 +54,9 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ONBUILD COPY python-versions.txt ./
-ONBUILD RUN pyenv update && \
-            xargs -P 4 -n 1 pyenv install < python-versions.txt && \
-            pyenv global $(pyenv versions --bare) && \
-            find $PYENV_ROOT/versions -type d '(' -name '__pycache__' -o -name 'test' -o -name 'tests' ')' -exec rm -rfv '{}' + && \
-            find $PYENV_ROOT/versions -type f '(' -name '*.py[co]' -o -name '*.exe' ')' -exec rm -fv '{}' + && \
-            mv -v -- /python-versions.txt $PYENV_ROOT/version
+ONBUILD RUN \
+    xargs -n 1 pyenv install < python-versions.txt && \
+    pyenv global $(pyenv versions --bare) && \
+    find $PYENV_ROOT/versions -type d '(' -name '__pycache__' -o -name 'test' -o -name 'tests' ')' -exec rm -rfv '{}' + && \
+    find $PYENV_ROOT/versions -type f '(' -name '*.py[co]' -o -name '*.exe' ')' -exec rm -fv '{}' + && \
+    mv -v -- /python-versions.txt $PYENV_ROOT/version
