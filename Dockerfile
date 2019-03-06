@@ -55,7 +55,7 @@ RUN apt-get update && \
 
 ONBUILD COPY python-versions.txt ./
 ONBUILD RUN \
-    xargs -n 1 pyenv install < python-versions.txt && \
+    xargs -P $(nproc) -n 1 pyenv install < python-versions.txt && \
     pyenv global $(pyenv versions --bare) && \
     find $PYENV_ROOT/versions -type d '(' -name '__pycache__' -o -name 'test' -o -name 'tests' ')' -exec rm -rfv '{}' + && \
     find $PYENV_ROOT/versions -type f '(' -name '*.py[co]' -o -name '*.exe' ')' -exec rm -fv '{}' + && \
