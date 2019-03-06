@@ -11,13 +11,13 @@ RUN apt-get update && \
 ENV LANG en_US.UTF-8
 
 ENV PYENV_ROOT="/.pyenv" \
-    PYENV_VERSION="7d02b2463b7da53ca62b655c8d5b3a72c7f0cab5" \
+    PYENV_GIT_VERSION="7d02b2463b7da53ca62b655c8d5b3a72c7f0cab5" \
     PATH="/.pyenv/bin:/.pyenv/shims:$PATH"
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git ca-certificates curl && \
     git clone "https://github.com/pyenv/pyenv.git" "$PYENV_ROOT" && \
-    git --git-dir "$PYENV_ROOT/.git" --work-tree "$PYENV_ROOT" checkout -qf "$PYENV_VERSION" && \
+    git --git-dir "$PYENV_ROOT/.git" --work-tree "$PYENV_ROOT" checkout -qf "$PYENV_GIT_VERSION" && \
     rm -rf "$PYENV_ROOT/.git" && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
