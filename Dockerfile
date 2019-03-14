@@ -72,7 +72,7 @@ RUN set -eux; \
 ONBUILD COPY python-versions.txt /
 # and installs the included python versions
 ONBUILD RUN set -eux; \
-    xargs -P $(nproc) -n 1 pyenv install < python-versions.txt; \
+    xargs -P4 -n 1 pyenv install < python-versions.txt; \
     mv -v -- /python-versions.txt $PYENV_ROOT/version; \
     pyenv rehash; \
     pyenv versions; \
