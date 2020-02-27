@@ -58,7 +58,7 @@ RUN set -eux; \
 
 # configure pyenv
 ENV PYENV_ROOT="/.pyenv" \
-    PYENV_GIT_VERSION="7d02b2463b7da53ca62b655c8d5b3a72c7f0cab5" \
+    PYENV_GIT_VERSION="174b7e72a1e11f22a1231f1576e96ab771b16766" \
     PATH="/.pyenv/bin:/.pyenv/shims:$PATH"
 
 # clone and install pyenv
@@ -72,7 +72,7 @@ RUN set -eux; \
 ONBUILD COPY python-versions.txt /
 # and installs the included python versions
 ONBUILD RUN set -eux; \
-    xargs -P4 -n 1 pyenv install < python-versions.txt; \
+    xargs -P$(nproc) -n 1 pyenv install < python-versions.txt; \
     mv -v -- /python-versions.txt $PYENV_ROOT/version; \
     pyenv rehash; \
     pyenv versions; \
