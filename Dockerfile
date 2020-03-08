@@ -1,4 +1,4 @@
-FROM debian:stretch-slim
+FROM debian:buster-slim
 
 LABEL author="Matthew Tardiff <mattrix@gmail.com>"
 LABEL maintainer="Brandon LeBlanc <brandon@leblanc.codes>"
