@@ -3,10 +3,9 @@ FROM debian:buster-slim
 LABEL author="Matthew Tardiff <mattrix@gmail.com>"
 LABEL maintainer="Brandon LeBlanc <brandon@leblanc.codes>"
 
-ENV DEBIAN_FRONTEND noninteractive
-
 # Use en_US.UTF-8 locale
 RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get install --no-install-recommends -y locales; \
     apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; \
@@ -16,18 +15,21 @@ ENV LANG=en_US.UTF-8
 # Install gosu to de-elevate permissions
 # https://github.com/tianon/gosu#from-debian
 RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get install --no-install-recommends -y gosu; \
     apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
 # install git and curl
 RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get install -y --no-install-recommends git ca-certificates curl; \
     apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
 # install python dependencies
 RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         dpkg-dev \
