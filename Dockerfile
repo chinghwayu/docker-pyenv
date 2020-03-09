@@ -71,11 +71,10 @@ RUN set -eux; \
 
 # these actions are executed before building sub-images
 # copies a local `python-versions.txt` file
-ONBUILD COPY python-versions.txt /
+ONBUILD COPY python-versions.txt $PYENV_ROOT/version
 # and installs the included python versions
 ONBUILD RUN set -eux; \
-    xargs -P$(nproc) -n 1 pyenv install < python-versions.txt; \
-    mv -v -- /python-versions.txt $PYENV_ROOT/version; \
+    xargs -P$(nproc) -n 1 pyenv install < $PYENV_ROOT/version; \
     pyenv rehash; \
     pyenv versions; \
     find $PYENV_ROOT/versions -type d '(' -name '__pycache__' -o -name 'test' -o -name 'tests' ')' -exec rm -rf '{}' +; \
