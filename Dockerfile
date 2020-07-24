@@ -60,7 +60,7 @@ RUN set -eux; \
 
 # configure pyenv
 ENV PYENV_ROOT="/.pyenv" \
-    PYENV_GIT_VERSION="a8ca63fcc0d6b470e2d5fc18fb85fad90efd4a59" \
+    PYENV_GIT_VERSION="c52d26d8dbc7a0f9c7d4d4f8886fe5d1f7dbd563" \
     PATH="/.pyenv/bin:/.pyenv/shims:$PATH"
 
 # clone and install pyenv
