@@ -1,7 +1,7 @@
 FROM debian:buster-slim
 
 LABEL author="Matthew Tardiff <mattrix@gmail.com>"
-LABEL maintainer="Brandon LeBlanc <brandon@leblanc.codes>"
+LABEL maintainer="Ching-Hwa Yu <chinghwayu@gmail.com>"
 
 # Use en_US.UTF-8 locale
 RUN set -eux; \
@@ -60,14 +60,14 @@ RUN set -eux; \
 
 # configure pyenv
 ENV PYENV_ROOT="/.pyenv" \
-    PYENV_GIT_VERSION="c52d26d8dbc7a0f9c7d4d4f8886fe5d1f7dbd563" \
     PATH="/.pyenv/bin:/.pyenv/shims:$PATH"
 
-# clone and install pyenv
+# install pyenv
 RUN set -eux; \
-    git clone "https://github.com/pyenv/pyenv.git" "$PYENV_ROOT"; \
-    git --git-dir "$PYENV_ROOT/.git" --work-tree "$PYENV_ROOT" checkout -qf "$PYENV_GIT_VERSION"; \
-    rm -rf "$PYENV_ROOT/.git";
+    export DEBIAN_FRONTEND=noninteractive; \
+    apt-get update; \
+    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash; \
+    apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # these actions are executed before building sub-images
 # copies a local `python-versions.txt` file
